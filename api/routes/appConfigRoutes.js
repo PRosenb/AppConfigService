@@ -1,8 +1,9 @@
 'use strict';
 
-module.exports = function(app) {
-  var appConfig = require('../controllers/appConfigController');
+module.exports = function (app) {
+    let appConfig = require('../controllers/appConfigController');
 
-  app.route('/')
-    .get(appConfig.fetch_config);
+    app
+        .route('/')
+        .get(appConfig.fetchConfig);
 };

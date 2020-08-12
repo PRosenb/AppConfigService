@@ -1,16 +1,12 @@
-var express = require('express'),
-  app = express(),
-  port = process.env.PORT || 3000,
-  bodyParser = require('body-parser');
+const express = require('express'),
+    app = express(),
+    port = process.env.PORT || 3000;
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-var routes = require('./api/routes/appConfigRoutes');
+let routes = require('./api/routes/appConfigRoutes');
 routes(app);
 
-app.use(function(req, res) {
-  res.status(404).send({url: req.originalUrl + ' not found'})
+app.use(function (req, res) {
+    res.status(404).send({url: req.originalUrl + ' not found'})
 });
 
 app.listen(port);

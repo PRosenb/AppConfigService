@@ -1,0 +1,14 @@
+- id: trabr-prod
+  name: Trabr Prod
+  authority: com.trabr.config
+  sort: 100
+  keyValues:
+    - key: START_URL
+      value:
+- id: trabr-testpage
+  name: Trabr Test Page
+  authority: com.trabr.config
+  sort: 999
+  keyValues:
+    - key: START_URL
+      value: https://trabr.pete.ch/test-page/
