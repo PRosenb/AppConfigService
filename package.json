@@ -4,12 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start:dev": "nodemon",
+    "build": "rimraf ./build && tsc && cp src/api/controllers/config.json dist/api/controllers/",
+    "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Pete",
   "license": "Apache-2.0",
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "@types/node": "^14.0.27",
+    "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
   },
   "dependencies": {
     "express": "^4.17.1",

@@ -1,9 +1,10 @@
 'use strict';
 
-const github = require('octonode');
-const util = require('util');
-const fs = require('fs');
-const config = require('./config.json');
+import github = require('octonode');
+import util = require('util');
+import fs = require('fs');
+
+let config = require('./config.json');
 
 // Convert fs.readFile into Promise version of the same
 const readFile = util.promisify(fs.readFile);
