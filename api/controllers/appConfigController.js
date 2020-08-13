@@ -18,11 +18,24 @@ let generateEntryForPr = function (prNumber, sort) {
         "    value: " + util.format(config.entryKeyValueValue, prNumber) + "\n";
 }
 
-exports.fetchConfig = async function (req, res) {
-    const client = github.client(config.githubPersonAccessToken)
-    const repo = client.repo(config.githubRepository)
-    const prsResult = await repo.prsAsync();
-    const allPullRequests = prsResult[0];
+exports.fetchConfig = function (req, res, next) {
+    fetchConfigAsync(req, res)
+        .catch((reason) => next(reason));
+}
+
+const fetchConfigAsync = async function (req, res) {
+    let client = github.client(config.githubPersonAccessToken)
+    let repo = client.repo(config.githubRepository)
+    let prsResult;
+    try {
+        // noinspection JSUnresolvedFunction
+        prsResult = await repo.prsAsync();
+    } catch (e) {
+        res.status(500).send('Error fetching PRs: ' + e);
+        return;
+    }
+
+    let allPullRequests = prsResult[0];
     let filteredPullRequests = allPullRequests.filter(function (item) {
         return item.state === "open";
     });
@@ -42,7 +55,7 @@ exports.fetchConfig = async function (req, res) {
         });
 
     try {
-        const fileData = await readFile(config.preconfiguredEntriesFile);
+        let fileData = await readFile(config.preconfiguredEntriesFile);
         res.send(fileData + generatedOutput);
     } catch (e) {
         console.log("file '" + config.preconfiguredEntriesFile + "' not found. ", e)
