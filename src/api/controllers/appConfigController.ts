@@ -4,7 +4,17 @@ import github = require('octonode');
 import util = require('util');
 import fs = require('fs');
 
-let config = require('./config.json');
+export class Config {
+    githubPersonAccessToken: string;
+    githubRepository: string;
+    entryName: string = "Pull Request %s";
+    entryAuthority: string;
+    entryKeyValueKey: string = "START_URL";
+    entryKeyValueValue: string;
+    preconfiguredEntriesFile: string = "preconfiguredEntries.yaml";
+}
+
+let config: Config = require('./config.json');
 
 // Convert fs.readFile into Promise version of the same
 const readFile = util.promisify(fs.readFile);
