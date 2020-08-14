@@ -7,12 +7,15 @@
     "start:dev": "nodemon",
     "build": "rimraf ./build && tsc && cp src/api/controllers/config.json dist/api/controllers/",
     "start": "node dist/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -r ts-node/register test/**/*.spec.ts"
   },
   "author": "Pete",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@types/mocha": "^8.0.2",
     "@types/node": "^14.0.27",
+    "chai": "^4.2.0",
+    "mocha": "^8.1.1",
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",
     "ts-node": "^8.10.2",

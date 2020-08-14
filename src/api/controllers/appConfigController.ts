@@ -14,7 +14,9 @@ export class Config {
     preconfiguredEntriesFile: string = "preconfiguredEntries.yaml";
 }
 
-let config: Config = require('./config.json');
+// exported for test purpose only
+export const config: Config = require('./config.json');
+export const client = github.client(config.githubPersonAccessToken)
 
 // Convert fs.readFile into Promise version of the same
 const readFile = util.promisify(fs.readFile);
@@ -29,13 +31,13 @@ let generateEntryForPr = function (prNumber, sort) {
         "    value: " + util.format(config.entryKeyValueValue, prNumber) + "\n";
 }
 
-exports.fetchConfig = function (req, res, next) {
+export const fetchConfig = function (req, res, next) {
     fetchConfigAsync(req, res)
         .catch((reason) => next(reason));
 }
 
-const fetchConfigAsync = async function (req, res) {
-    let client = github.client(config.githubPersonAccessToken)
+// exported for test purprose only
+export const fetchConfigAsync = async function (req, res) {
     let repo = client.repo(config.githubRepository)
     let prsResult;
     try {
@@ -69,7 +71,7 @@ const fetchConfigAsync = async function (req, res) {
         let fileData = await readFile(config.preconfiguredEntriesFile);
         res.send(fileData + generatedOutput);
     } catch (e) {
-        console.log("file '" + config.preconfiguredEntriesFile + "' not found. ", e)
+        console.log("file '" + config.preconfiguredEntriesFile + "' not found. ")
         // file not found so just return generated output
         res.send(generatedOutput);
     }
