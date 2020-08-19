@@ -1,0 +1,14 @@
+- id: test-prod
+  name: Test Prod
+  authority: com.test.config
+  sort: 100
+  keyValues:
+    - key: START_URL
+      value:
+- id: test-page
+  name: Test Page
+  authority: com.test.config
+  sort: 999
+  keyValues:
+    - key: START_URL
+      value: https://test.com/test-page/
