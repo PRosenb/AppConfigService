@@ -1,17 +1,23 @@
 'use strict';
 
+// @ts-ignore
 import github = require('octonode');
 import util = require('util');
 import fs = require('fs');
 
 export class Config {
-    githubPersonAccessToken: string;
-    githubRepository: string;
+    githubPersonAccessToken?: string;
+    githubRepository?: string;
     entryName: string = "Pull Request %s";
-    entryAuthority: string;
+    entryAuthority?: string;
     entryKeyValueKey: string = "START_URL";
-    entryKeyValueValue: string;
+    entryKeyValueValue?: string
     preconfiguredEntriesFile: string = "preconfiguredEntries.yaml";
+}
+
+interface PullRequest {
+    state: string
+    number: number
 }
 
 // exported for test purpose only
@@ -21,7 +27,7 @@ export const client = github.client(config.githubPersonAccessToken)
 // Convert fs.readFile into Promise version of the same
 const readFile = util.promisify(fs.readFile);
 
-let generateEntryForPr = function (prNumber, sort) {
+let generateEntryForPr = function (prNumber: number, sort: number) {
     return "- id: PR-" + prNumber + "\n" +
         "  name: " + util.format(config.entryName, prNumber) + "\n" +
         "  authority: " + config.entryAuthority + "\n" +
@@ -31,12 +37,14 @@ let generateEntryForPr = function (prNumber, sort) {
         "    value: " + util.format(config.entryKeyValueValue, prNumber) + "\n";
 }
 
+// @ts-ignore
 export const fetchConfig = function (req, res, next) {
     fetchConfigAsync(req, res)
         .catch((reason) => next(reason));
 }
 
-// exported for test purprose only
+// exported for test purpose only
+// @ts-ignore
 export const fetchConfigAsync = async function (req, res) {
     let repo = client.repo(config.githubRepository)
     let prsResult;
@@ -49,22 +57,22 @@ export const fetchConfigAsync = async function (req, res) {
     }
 
     let allPullRequests = prsResult[0];
-    let filteredPullRequests = allPullRequests.filter(function (item) {
+    let filteredPullRequests = allPullRequests.filter(function (item: PullRequest) {
         return item.state === "open";
     });
-    let pullRequestNumbers = filteredPullRequests.map(function (item) {
+    let pullRequestNumbers = filteredPullRequests.map(function (item: PullRequest) {
         return item.number;
     });
 
     let generatedOutput = "";
     let sort = 110; // start above 100 to leave space for local entries
     pullRequestNumbers
-        .sort(function (a, b) {
+        .sort(function (a: number, b: number) {
             // reverse
             return b - a;
         })
-        .forEach(function (item) {
-            generatedOutput += generateEntryForPr(item, sort++);
+        .forEach(function (prNumber: number) {
+            generatedOutput += generateEntryForPr(prNumber, sort++);
         });
 
     try {

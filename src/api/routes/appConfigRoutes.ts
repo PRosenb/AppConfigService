@@ -1,6 +1,8 @@
 'use strict';
 
-module.exports = function (app) {
+import {Express} from "express";
+
+module.exports = function (app: Express) {
     let appConfig = require('../controllers/appConfigController');
 
     app
