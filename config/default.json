@@ -1,2 +1,9 @@
 {
+  "githubPersonAccessToken": "yourGithubPersonAccessToken",
+  "githubRepository": "group/repo",
+  "entryName": "Pull Request %s",
+  "entryAuthority": "com.example.config",
+  "entryKeyValueKey": "START_URL",
+  "entryKeyValueValue": "https://pr-%s.example.com/",
+  "preconfiguredEntriesFile": "preconfiguredEntries.yaml"
 }

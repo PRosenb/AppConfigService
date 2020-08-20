@@ -1,14 +1,14 @@
-- id: trabr-prod
-  name: Trabr Prod
-  authority: com.trabr.config
+- id: prod
+  name: Prod
+  authority: com.example.config
   sort: 100
   keyValues:
     - key: START_URL
       value:
-- id: trabr-testpage
-  name: Trabr Test Page
-  authority: com.trabr.config
+- id: testpage
+  name: Test Page
+  authority: com.example.config
   sort: 999
   keyValues:
     - key: START_URL
-      value: https://trabr.pete.ch/test-page/
+      value: https://example.com/test-page/
