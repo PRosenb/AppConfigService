@@ -21,7 +21,7 @@ interface PullRequest {
 }
 
 // exported for test purpose only
-export const config: Config = require('./config.json');
+export const config: Config = require('config');
 export const client = github.client(config.githubPersonAccessToken)
 
 // Convert fs.readFile into Promise version of the same
